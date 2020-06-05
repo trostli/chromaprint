@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'byebug'
 
 describe 'Chromaprint integration' do
   # Path to directory with file fixtures
