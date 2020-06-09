@@ -1,6 +1,10 @@
 module Chromaprint
   # Contains compressed and raw fingerprints and provides a method to compare
   # them against other fingerprints.
+
+  #errors
+  class AudioTooShortError < StandardError; end
+
   class Fingerprint
     # Number of bits in one item of raw fingerprint
     BITS_PER_RAW_ITEM = 32
@@ -25,6 +29,9 @@ module Chromaprint
     #
     # @return [Float] float in 0..1 range where 1 is 100% match
     def compare(fingerprint)
+      if @raw.empty? || fingerprint.raw.empty?
+        raise AudioTooShortError
+      end
       max_raw_size = [@raw.size, fingerprint.raw.size].max
       bit_size     = max_raw_size * BITS_PER_RAW_ITEM
 
